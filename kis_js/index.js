@@ -181,6 +181,43 @@ app.get('/financialdata', function(req, res){
   })
 })
 
+app.get('/corpoutline', function(req, res){
+  let responseData = {};
+
+  /*res.writeHead(200, {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': "*"
+  })*/
+
+  let corpName = req.query.corpname;
+  console.log(corpName)
+
+
+  var sql_outline = "select * from outline where corpname = " + connection.escape(corpName);
+
+
+//SQL Injection 방어
+  const query_outline = connection.query(sql_outline, function(err, rows){
+      console.log(Object.values(JSON.parse(JSON.stringify(rows))))
+      if (err) throw err;
+      if (rows.length) {
+          responseData.result = 1;
+          responseData.data = Object.values(JSON.parse(JSON.stringify(rows)));
+          //console.log(typeof(rows))
+      } else {
+          responseData.result = 0
+      }
+      //console.log(responseData.data)
+      res.header({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': "*"
+      }).send(responseData)
+  })
+
+      //console.log(responseData.data)
+
+      //return res.status(200).json(responseData)
+  })
 
 /*app.post('/financialdata', function(req, res){
 

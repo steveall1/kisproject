@@ -145,8 +145,6 @@
 
                     function getJSON(){
                       var corpname = $(".form-control").val();
-                      var key = "val"
-                      var numData = 2
                       const xhr = new XMLHttpRequest();
                       xhr.open("GET", "http://localhost:5000/financialdata/?corpname="+corpname);
                       xhr.send();
@@ -330,17 +328,54 @@
                         myChart2.update();
                         myChart3.update();
 
-                        var profitAvg = ((val.data6[0].val23/val.data6[0].val22)*100 + (val.data6[0].val22/val.data6[0].val21)*100 + (val.data6[0].val21/val.data6[0].val20)*100)/3
+                        var fixedAssetPercentage = Math.round((val.data4[0].val23/val.data3[0].val23)*100)
+                        var cashAssetPercentage = Math.round((val.data1[0].val23/val.data2[0].val23)*100)
+                        var profitAvg = (((val.data6[0].val23/val.data6[0].val22)-1)*100 + ((val.data6[0].val22/val.data6[0].val21)-1)*100 + ((val.data6[0].val21/val.data6[0].val20)-1)*100)/3
 
                         $(".corp_text").text(val.data1[0].corpname)
-                        $(".fixasset_text").text(Math.round((val.data4[0].val23/val.data3[0].val23)*100))
-                        $(".cashasset_text").text(Math.round((val.data1[0].val23/val.data2[0].val23)*100))
+                        $(".fixasset_text").text(fixedAssetPercentage)
+                        if (fixedAssetPercentage > 100){
+                          $("#fix_percent").attr('class', 'percent up')
+                        }else if(fixedAssetPercentage < 100){
+                          $("#fix_percent").attr('class', 'percent down')
+                        }
+                        $(".cashasset_text").text(cashAssetPercentage)
+                        if (cashAssetPercentage > 100){
+                          $("#cash_percent").attr('class', 'percent up')
+                        }else if(cashAssetPercentage < 100){
+                          $("#cash_percent").attr('class', 'percent down')
+                        }
                         $(".profit_text").text(Math.round(profitAvg))
-                        $(".cash_text").text(Math.round(val.data1[0].val23/1000000))
+                        if(profitAvg < 0){
+                          $("#profit_percent").attr('class', 'percent down')
+                        }else if(profitAvg > 0){
+                          $("#profit_percent").attr('class', 'percent up')
+                        }
+                        $(".cash_text").text(Math.round(val.data1[0].val23/1000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
                         //alert(Object.keys(val.data1[0]).length)
                           return data
                         } else {
                           console.log(`Error: ${xhr.status}`);
+                        }
+                      };
+
+                      const xhr_outline = new XMLHttpRequest();
+                      xhr_outline.open("GET", "http://localhost:5000/corpoutline/?corpname="+corpname);
+                      xhr_outline.send();
+                      xhr_outline.responseType = "json";
+                      xhr_outline.onload = () => {
+                        if (xhr_outline.readyState == 4 && xhr_outline.status == 200) {
+                          const data = xhr_outline.response;
+                          let obj = JSON.stringify(data);
+                          let val = JSON.parse(obj);
+
+                          document.getElementById("outline_table").getElementsByTagName("tr")[0].getElementsByTagName("td")[0].innerHTML = val.data[0].ownership
+                          document.getElementById("outline_table").getElementsByTagName("tr")[0].getElementsByTagName("td")[1].innerHTML = val.data[0].shareholder1
+                          document.getElementById("outline_table").getElementsByTagName("tr")[1].getElementsByTagName("td")[0].innerHTML = val.data[0].shareholder2
+                          document.getElementById("outline_table").getElementsByTagName("tr")[1].getElementsByTagName("td")[1].innerHTML = val.data[0].ceo
+                          document.getElementById("outline_table").getElementsByTagName("tr")[2].getElementsByTagName("td")[0].innerHTML = val.data[0].establishment
+                          document.getElementById("outline_table").getElementsByTagName("tr")[2].getElementsByTagName("td")[1].innerHTML = val.data[0].isventure
+                          document.getElementById("outline_table").getElementsByTagName("tr")[3].getElementsByTagName("td")[0].innerHTML = val.data[0].marketvalue
                         }
                       };
                       //const json = 'http://localhost:5000/financialdata/?corpname='+corpname;
@@ -609,64 +644,120 @@
                     <div class="outer">
                         <div class="inner bg-light lter">
 <div class="col-lg-12">
-<h1><span class="corp_text">한국투자증권 재무정보시스템</span></h1>
-<div class="text-center">
-<ul class="stats_box">
-<li>
-<div class="sparkline bar_week"></div>
-<div class="stat_text">
+  <div style="width: max-content; background-color: #7fb1e3 ; padding:5px; border: 2px solid brown;">
+    <h1><span class="corp_text">&nbsp;&nbsp;한국투자증권 재무정보시스템&nbsp;&nbsp;</span></h1>
+  </div>
+<br></br>
+<br></br>
+<div style = "padding: 11px; border: 1px solid black;">
+  <div style="background-color: #63ff85 ; padding: 10px; border: 2px solid black;">
+    <h4><span class="fsouline_text">1️⃣ 재무요약</span></h4>
+  </div>
 
-<p></p>
-<strong><p>유형자산비중       </p></strong>
-<span class="percent down"> <span class="fixasset_text">0</span>%</span>
-</div>
-</li>
-<li>
-<div class="sparkline line_day"></div>
-<div class="stat_text">
-<p></p>
-<strong><p>현금비중</p></strong>
-<span class="percent up"> <span class="cashasset_text">0</span>%</span>
-</div>
-</li>
-<li>
-<div class="sparkline pie_week"></div>
-<div class="stat_text">
+  <br></br>
+    <div class="text-center">
+    <ul class="stats_box">
+    <li>
+    <div class="sparkline bar_week"></div>
+    <div class="stat_text">
 
-<strong><p>영업이익증가율</p>(3분기)          </strong>
-<span class="percent up"> <span class="profit_text">0</span>%</span>
-</div>
-</li>
-<li>
-<div class="sparkline stacked_month"></div>
-<div class="stat_text">
-<strong>총현금</strong>
-<span class="percent"> <br><span class="cash_text">0</span>(백만)</span></br>
-</div>
-</li>
-</ul>
-</div>
-<h3> 기업명 : <span class="corp_text">공란1</span></h3>
-<h4> 사업분야 : <span class="ind_text">공란2</span></h4>
-<h4> 소재지 : <span class="loc_text">공란3</span></h4>
+    <strong><p>유형자산비중       </p></strong>
+    <span class="percent" id="fix_percent"> <span class="fixasset_text">0</span>%</span>
+    </div>
+    </li>
+    <li>
+    <div class="sparkline line_day"></div>
+    <div class="stat_text">
+    <p></p>
+    <strong><p>현금비중</p></strong>
+    <span class="percent" id="cash_percent"> <span class="cashasset_text">0</span>%</span>
+    </div>
+    </li>
+    <li>
+    <div class="sparkline pie_week"></div>
+    <div class="stat_text">
 
-<ul>
+    <strong><p>영업이익증가율</p>(3분기)          </strong>
+    <span class="percent" id="profit_percent"> <span class="profit_text">0</span>%</span>
+    </div>
+    </li>
+    <li>
+    <div class="sparkline stacked_month"></div>
+    <div class="stat_text">
+    <strong>총현금(백만)</strong>
+    <span class="percent"> <br><span class="cash_text">0</span></span></br>
+    </div>
+    </li>
+    </ul>
+    </div>
+</div>
+<br></br>
+<div style = "padding: 11px; border: 1px solid black;">
+  <div style="background-color: #63ff85 ; padding: 10px; border: 2px solid black;">
+    <h4><span class="corpoutline_text">2️⃣ 기업개요</span></h4>
+  </div>
 
-</ul>
+
+<br></br>
+
+  <div id="sortableTable" class="body collapse in">
+      <table id="outline_table" class="table table-bordered sortableTable responsive-table">
+          <thead>
+              <tr>
+                  <th>최대주주지분율<i class="fa sort"></i></th>
+                  <td><i class="fa sort"></i></td>
+                  <th>최대주주<i class="fa sort"></i></th>
+                  <td><i class="fa sort"></i></td>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <th>2대주주</th>
+                  <td></td>
+                  <th>대표이사</th>
+                  <td></td>
+              </tr>
+              <tr>
+                  <th>설립일</th>
+                  <td></td>
+                  <th>벤처기업지정일</th>
+                  <td></td>
+              </tr>
+              <tr>
+                  <th>시가총액</th>
+                  <td></td>
+                  <th></th>
+                  <td></td>
+              </tr>
+          </tbody>                </table>
+  </div>
+</div>
+
+<br></br>
+
+<div style = "padding: 11px; border: 1px solid black;">
+  <div style="background-color: #63ff85 ; padding: 15px; border: 2px solid black;">
+    <h4><span class="chartanalysis_text">3️⃣ 재무차트분석</span></h4>
+  </div>
+
+<br></br>
 
 <div class="row" >
 
-  <h2>현금 - 비현금성 자산 분석</h2>
+  <h2>&nbsp;&nbsp;&nbsp;✅ 현금 - 비현금성 자산 분석</h2>
   <div class = "charts">
   <canvas id="myChart" width = "240px" style = "position: relative; height: 100px;"></canvas>
-
-  <h2>총자산 - 유형자산 자산 분석</h2>
+  <br></br>
+  <h2>&nbsp;&nbsp;&nbsp;✅ 총자산 - 유형자산 자산 분석</h2>
+  <br></br>
   <canvas id="myChart2"></canvas>
-
-  <h2>매출액/영업이익/순이익 분석</h2>
+  <br></br>
+  <h2>&nbsp;&nbsp;&nbsp;✅ 매출액/영업이익/순이익 분석</h2>
+  <br></br>
   <canvas id="myChart3"></canvas>
   </div>
 
+</div>
 </div>
 
 
@@ -771,8 +862,7 @@ var config = {
     scales: {
       yAxes: [{
         scaleLabel: {
-          display: true,
-          labelString: '차트'
+          display: true
         }
       }]
     },
@@ -884,8 +974,7 @@ var config_2 = {
     scales: {
       yAxes: [{
         scaleLabel: {
-          display: true,
-          labelString: '차트'
+          display: true
         }
       }]
     },
@@ -1026,8 +1115,7 @@ var config_3 = {
     scales: {
       yAxes: [{
         scaleLabel: {
-          display: true,
-          labelString: '차트'
+          display: true
         }
       }]
     },
