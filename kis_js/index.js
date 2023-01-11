@@ -1,6 +1,5 @@
 const express = require("express");
 
-
 var http = require('http');
 var fs = require('fs');
 
@@ -8,13 +7,21 @@ const app = express();
 const router = express.Router()
 const mysql = require('mysql')
 
+let config = fs.readFileSync('config.json');
+let configJSON = JSON.parse(config);
+
+let hostname = configJSON['host']
+let portnum = configJSON['port']
+let username = configJSON['user']
+let pwd = configJSON['password']
+let dbname = configJSON['database']
 
 const connection = mysql. createConnection({
-  host: 'localhost',
-  port: 3306,
-  user: 'root',
-  password: 'bummy1996731!',
-  database: 'fsdata'
+  host: hostname,
+  port: portnum,
+  user: username,
+  password: pwd,
+  database: dbname
 })
 
 
@@ -287,6 +294,11 @@ app.get('/index.html', function (req, res) {
 res.sendFile(__dirname + '/public/index.html');
 })
 
+function prediction(arr){
+  net.train([[1, 2, 3]]);
+
+  const output = net.run([1, 2]); // 3
+}
 
 app.use("/assets",express.static(__dirname + "/public/assets"))
 

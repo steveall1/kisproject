@@ -61,6 +61,8 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="//unpkg.com/brain.js"></script>
+
   </head>
 
         <body class="  ">
@@ -143,7 +145,9 @@
 
                     <script>
 
-                    function getJSON(){
+
+
+                    function getJSON(net){
                       var corpname = $(".form-control").val();
                       const xhr = new XMLHttpRequest();
                       xhr.open("GET", "http://localhost:5000/financialdata/?corpname="+corpname);
@@ -179,6 +183,83 @@
                           config.data.datasets[0].data[20] = val.data1[0].val21
                           config.data.datasets[0].data[21] = val.data1[0].val22
                           config.data.datasets[0].data[22] = val.data1[0].val23
+
+
+                          /*const net = new brain.recurrent.LSTMTimeStep({
+                            inputSize: 2,
+                            hiddenLayers: [100],
+                            outputSize: 2,
+                            activation: 'sigmoid', // supported activation types: ['sigmoid', 'relu', 'leaky-relu', 'tanh'],
+                            leakyReluAlpha: 0.01, // supported for activation type 'leaky-relu'
+                          });
+
+
+
+                          net.train([
+                            [1, val.data1[0].val1],
+                            [2, val.data1[0].val2],
+                            [3, val.data1[0].val3],
+                            [4, val.data1[0].val4],
+                            [5, val.data1[0].val5],
+                            [6, val.data1[0].val6],
+                            [7, val.data1[0].val7],
+                            [8, val.data1[0].val8],
+                            [9, val.data1[0].val9],
+                            [10, val.data1[0].val10],
+                            [11, val.data1[0].val11],
+                            [12, val.data1[0].val12],
+                            [13, val.data1[0].val13],
+                            [14, val.data1[0].val14],
+                            [15, val.data1[0].val15],
+                            [16, val.data1[0].val16],
+                            [17, val.data1[0].val17],
+                            [18, val.data1[0].val18],
+                            [19, val.data1[0].val19],
+                            [20, val.data1[0].val20],
+                            [21, val.data1[0].val21],
+                            [22, val.data1[0].val22],
+                            [23, val.data1[0].val23],
+                          ],  {
+                            iterations: 100000,
+                            errorThresh: 10000, // the maximum times to iterate the training data --> number greater than 0// the acceptable error percentage from training data --> number between 0 and 1
+                            log: false, // true to use console.log, when a function is supplied it is used --> Either true or a function
+                            logPeriod: 10, // iterations between logging out --> number greater than 0
+                            learningRate: 0.001, // scales with delta to effect training rate --> number between 0 and 1
+                            momentum: 0.1
+                          });
+
+
+
+                          const output = net.run([
+                            [1, val.data1[0].val1],
+                            [2, val.data1[0].val2],
+                            [3, val.data1[0].val3],
+                            [4, val.data1[0].val4],
+                            [5, val.data1[0].val5],
+                            [6, val.data1[0].val6],
+                            [7, val.data1[0].val7],
+                            [8, val.data1[0].val8],
+                            [9, val.data1[0].val9],
+                            [10, val.data1[0].val10],
+                            [11, val.data1[0].val11],
+                            [12, val.data1[0].val12],
+                            [13, val.data1[0].val13],
+                            [14, val.data1[0].val14],
+                            [15, val.data1[0].val15],
+                            [16, val.data1[0].val16],
+                            [17, val.data1[0].val17],
+                            [18, val.data1[0].val18],
+                            [19, val.data1[0].val19],
+                            [20, val.data1[0].val20],
+                            [21, val.data1[0].val21],
+                            [22, val.data1[0].val22],
+                            [23, val.data1[0].val23],
+                          ]);
+
+
+                          config.data.datasets[0].data[23] = output[0]
+
+                          alert(output)*/
 
                           config.data.datasets[1].data[0] = val.data2[0].val1
                           config.data.datasets[1].data[1] = val.data2[0].val2
@@ -252,53 +333,53 @@
                           config_2.data.datasets[1].data[21] = val.data4[0].val22
                           config_2.data.datasets[1].data[22] = val.data4[0].val23
 
-                          config_3.data.datasets[0].data[0] = val.data5[0].val1
-                          config_3.data.datasets[0].data[1] = val.data5[0].val2
-                          config_3.data.datasets[0].data[2] = val.data5[0].val3
-                          config_3.data.datasets[0].data[3] = val.data5[0].val4
-                          config_3.data.datasets[0].data[4] = val.data5[0].val5
-                          config_3.data.datasets[0].data[5] = val.data5[0].val6
-                          config_3.data.datasets[0].data[6] = val.data5[0].val7
-                          config_3.data.datasets[0].data[7] = val.data5[0].val8
-                          config_3.data.datasets[0].data[8] = val.data5[0].val9
-                          config_3.data.datasets[0].data[9] = val.data5[0].val10
-                          config_3.data.datasets[0].data[10] = val.data5[0].val11
-                          config_3.data.datasets[0].data[11] = val.data5[0].val12
-                          config_3.data.datasets[0].data[12] = val.data5[0].val13
-                          config_3.data.datasets[0].data[13] = val.data5[0].val14
-                          config_3.data.datasets[0].data[14] = val.data5[0].val15
-                          config_3.data.datasets[0].data[15] = val.data5[0].val16
-                          config_3.data.datasets[0].data[16] = val.data5[0].val17
-                          config_3.data.datasets[0].data[17] = val.data5[0].val18
-                          config_3.data.datasets[0].data[18] = val.data5[0].val19
-                          config_3.data.datasets[0].data[19] = val.data5[0].val20
-                          config_3.data.datasets[0].data[20] = val.data5[0].val21
-                          config_3.data.datasets[0].data[21] = val.data5[0].val22
-                          config_3.data.datasets[0].data[22] = val.data5[0].val23
+                          config_3.data.datasets[0].data[0] = val.data6[0].val1
+                          config_3.data.datasets[0].data[1] = val.data6[0].val2
+                          config_3.data.datasets[0].data[2] = val.data6[0].val3
+                          config_3.data.datasets[0].data[3] = val.data6[0].val4
+                          config_3.data.datasets[0].data[4] = val.data6[0].val5
+                          config_3.data.datasets[0].data[5] = val.data6[0].val6
+                          config_3.data.datasets[0].data[6] = val.data6[0].val7
+                          config_3.data.datasets[0].data[7] = val.data6[0].val8
+                          config_3.data.datasets[0].data[8] = val.data6[0].val9
+                          config_3.data.datasets[0].data[9] = val.data6[0].val10
+                          config_3.data.datasets[0].data[10] = val.data6[0].val11
+                          config_3.data.datasets[0].data[11] = val.data6[0].val12
+                          config_3.data.datasets[0].data[12] = val.data6[0].val13
+                          config_3.data.datasets[0].data[13] = val.data6[0].val14
+                          config_3.data.datasets[0].data[14] = val.data6[0].val15
+                          config_3.data.datasets[0].data[15] = val.data6[0].val16
+                          config_3.data.datasets[0].data[16] = val.data6[0].val17
+                          config_3.data.datasets[0].data[17] = val.data6[0].val18
+                          config_3.data.datasets[0].data[18] = val.data6[0].val19
+                          config_3.data.datasets[0].data[19] = val.data6[0].val20
+                          config_3.data.datasets[0].data[20] = val.data6[0].val21
+                          config_3.data.datasets[0].data[21] = val.data6[0].val22
+                          config_3.data.datasets[0].data[22] = val.data6[0].val23
 
-                          config_3.data.datasets[1].data[0] = val.data6[0].val1
-                          config_3.data.datasets[1].data[1] = val.data6[0].val2
-                          config_3.data.datasets[1].data[2] = val.data6[0].val3
-                          config_3.data.datasets[1].data[3] = val.data6[0].val4
-                          config_3.data.datasets[1].data[4] = val.data6[0].val5
-                          config_3.data.datasets[1].data[5] = val.data6[0].val6
-                          config_3.data.datasets[1].data[6] = val.data6[0].val7
-                          config_3.data.datasets[1].data[7] = val.data6[0].val8
-                          config_3.data.datasets[1].data[8] = val.data6[0].val9
-                          config_3.data.datasets[1].data[9] = val.data6[0].val10
-                          config_3.data.datasets[1].data[10] = val.data6[0].val11
-                          config_3.data.datasets[1].data[11] = val.data6[0].val12
-                          config_3.data.datasets[1].data[12] = val.data6[0].val13
-                          config_3.data.datasets[1].data[13] = val.data6[0].val14
-                          config_3.data.datasets[1].data[14] = val.data6[0].val15
-                          config_3.data.datasets[1].data[15] = val.data6[0].val16
-                          config_3.data.datasets[1].data[16] = val.data6[0].val17
-                          config_3.data.datasets[1].data[17] = val.data6[0].val18
-                          config_3.data.datasets[1].data[18] = val.data6[0].val19
-                          config_3.data.datasets[1].data[19] = val.data6[0].val20
-                          config_3.data.datasets[1].data[20] = val.data6[0].val21
-                          config_3.data.datasets[1].data[21] = val.data6[0].val22
-                          config_3.data.datasets[1].data[22] = val.data6[0].val23
+                          config_3.data.datasets[1].data[0] = val.data5[0].val1
+                          config_3.data.datasets[1].data[1] = val.data5[0].val2
+                          config_3.data.datasets[1].data[2] = val.data5[0].val3
+                          config_3.data.datasets[1].data[3] = val.data5[0].val4
+                          config_3.data.datasets[1].data[4] = val.data5[0].val5
+                          config_3.data.datasets[1].data[5] = val.data5[0].val6
+                          config_3.data.datasets[1].data[6] = val.data5[0].val7
+                          config_3.data.datasets[1].data[7] = val.data5[0].val8
+                          config_3.data.datasets[1].data[8] = val.data5[0].val9
+                          config_3.data.datasets[1].data[9] = val.data5[0].val10
+                          config_3.data.datasets[1].data[10] = val.data5[0].val11
+                          config_3.data.datasets[1].data[11] = val.data5[0].val12
+                          config_3.data.datasets[1].data[12] = val.data5[0].val13
+                          config_3.data.datasets[1].data[13] = val.data5[0].val14
+                          config_3.data.datasets[1].data[14] = val.data5[0].val15
+                          config_3.data.datasets[1].data[15] = val.data5[0].val16
+                          config_3.data.datasets[1].data[16] = val.data5[0].val17
+                          config_3.data.datasets[1].data[17] = val.data5[0].val18
+                          config_3.data.datasets[1].data[18] = val.data5[0].val19
+                          config_3.data.datasets[1].data[19] = val.data5[0].val20
+                          config_3.data.datasets[1].data[20] = val.data5[0].val21
+                          config_3.data.datasets[1].data[21] = val.data5[0].val22
+                          config_3.data.datasets[1].data[22] = val.data5[0].val23
 
                           config_3.data.datasets[2].data[0] = val.data7[0].val1
                           config_3.data.datasets[2].data[1] = val.data7[0].val2
@@ -790,7 +871,7 @@ var config = {
       '2021 4Q',
       '2022 1Q',
       '2022 2Q',
-      '2022 3Q'
+      '2022 3Q',
     ],
     datasets: [{
       label: '현금성자산',
