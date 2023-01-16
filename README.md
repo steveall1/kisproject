@@ -11,6 +11,10 @@
 # 프로젝트 PT 및 시연 영상
 
 
+https://user-images.githubusercontent.com/30045657/212623007-b7bb6fdd-721e-4680-987a-e7f56879872a.mp4
+
+
+
 
 # Application 최종 배포 주소
 
