@@ -7,15 +7,14 @@
 - 본사영업(IB/ECM) 홍기범
 - 프로젝트 주소 및 소스코드(github)
 
-[GitHub - steveall1/kisproject](https://github.com/steveall1/kisproject)
 
 # 프로젝트 PT 및 시연 영상
 
-[프로젝트 시연 영상_홍기범.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fda627c1-985c-4c36-a09e-669929cac0c5/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EC%8B%9C%EC%97%B0_%EC%98%81%EC%83%81_%ED%99%8D%EA%B8%B0%EB%B2%94.mp4)
+
 
 # Application 최종 배포 주소
 
-[https://c7c3-121-162-142-147.jp.ngrok.io](https://c7c3-121-162-142-147.jp.ngrok.io/)(현재 서버 비 가동중)
+[https://c7c3-121-162-142-147.jp.ngrok.io](https://c7c3-121-162-142-147.jp.ngrok.io/)(임시 배포로 현재 서버 비 가동중)
 
 # 작품 주제
 
@@ -89,8 +88,6 @@ Extra) CSS를 이용한 Visualization upgrade(완료), Kubernetes를 이용한 �
 
 - **비 IT직무도 할 수 있다(IB can do it)**
 - Python으로 Server를 구현하지 못한 것이 아쉬움(Data Serving - Server 간의 Language 불일치)
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0f2dcc1c-39a2-496f-a497-cce20806e30e/Untitled.jpeg)
 
 - 웹 프론트를 중점적으로 구현하며 코딩 실력 향상
 - 앞으로 현업을 수행하며 필요하다고 느끼는 기능을 계속 추가하고 싶다
